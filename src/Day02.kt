@@ -1,9 +1,9 @@
 fun main() {
     fun part1(input: List<String>): Int {
         val allPoints = input.sumOf {
-            val game = it.split(" ")
-            val opponent = Shape.decryptShape(game.first())
-            val me = Shape.decryptShape(game[1])
+            val (first, second) = it.split(" ")
+            val opponent = Shape.decryptShape(first)
+            val me = Shape.decryptShape(second)
 
             // my points for this move
             me.play(opponent)
@@ -76,7 +76,7 @@ sealed class Shape(val value: Int) {
         }
 
         override fun getShapeForOutcome(outcome: Outcome): Shape {
-            return when (outcome){
+            return when (outcome) {
                 Outcome.LOSE -> Scissor
                 Outcome.DRAW -> this
                 Outcome.WIN -> Paper
@@ -94,7 +94,7 @@ sealed class Shape(val value: Int) {
         }
 
         override fun getShapeForOutcome(outcome: Outcome): Shape {
-            return when (outcome){
+            return when (outcome) {
                 Outcome.LOSE -> Rock
                 Outcome.DRAW -> this
                 Outcome.WIN -> Scissor
@@ -112,7 +112,7 @@ sealed class Shape(val value: Int) {
         }
 
         override fun getShapeForOutcome(outcome: Outcome): Shape {
-            return when (outcome){
+            return when (outcome) {
                 Outcome.LOSE -> Paper
                 Outcome.DRAW -> this
                 Outcome.WIN -> Rock
