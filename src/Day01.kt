@@ -1,17 +1,36 @@
+import java.io.File
+
 fun main() {
-    fun part1(input: List<String>): Int {
-        return input.size
+    fun part1(elves: List<Elf>): Int {
+        val maxCalories = elves.maxOfOrNull { it.sumOfCaloriesCarried() }
+        println("Max calories: $maxCalories")
+        return maxCalories ?: 0
     }
 
-    fun part2(input: List<String>): Int {
-        return input.size
+    fun part2(elves: List<Elf>): Int {
+        val caloriesOfMaxThree = elves.map { it.sumOfCaloriesCarried() }.sorted().takeLast(3).sum()
+        println("Total of calories carried by elves carrying most calories: $caloriesOfMaxThree")
+        return caloriesOfMaxThree
     }
 
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    check(part1(testInput) == 1)
+    val input = File("./src/Day01.txt").readText()
+    val elves = Elf.createElves(input)
+    part1(elves)
+    part2(elves)
+}
 
-    val input = readInput("Day01")
-    println(part1(input))
-    println(part2(input))
+data class Elf(
+    val items: List<Int>
+) {
+    companion object {
+        fun createElves(inputData: String): List<Elf> {
+            return inputData.split("\r\n\r\n").map { itemsString ->
+                itemsString.lines().map { it.toInt() }
+            }.map { integers ->
+                Elf(integers)
+            }
+        }
+    }
+
+    fun sumOfCaloriesCarried() = items.sum()
 }
